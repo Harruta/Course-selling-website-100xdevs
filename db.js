@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const course = require("./Routes/course");
+
+
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -33,7 +34,7 @@ const purchaseSchema = new Schema({
 const userModel = mongoose.model("user", userSchema);
 const adminModel = mongoose.model("admin", adminSchema);
 const courseModel = mongoose.model("course", courseSchema);
-const purchaseModel = mongoose.model("course", courseSchema);
+const purchaseModel = mongoose.model("purchase", purchaseSchema);
 
 module.exports = {
     userModel,

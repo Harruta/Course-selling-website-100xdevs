@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { userModel } = require("../db");
+const { userModel, purchaseModel, courseModel } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRouter = Router();
@@ -58,9 +58,26 @@ userRouter.post("/signin", async function (req, res) {
 });
 
 
-userRouter.post("/mycources", function(req, res) {
+userRouter.get("/purchases", async function(req, res) {
+    const userId = req.userId;
+
+    const purchases = await purchaseModel.find({
+        userId,
+    });
+    
+    let purchasedCourseIds = [];
+    
+    for (let i = 0; i< purchases.length; i++){
+    purchasedCourseIds.push(purchases[i].courseId)
+    }
+    
+    const courseData = await courseModel.find({
+      _id: { $in: purchasedCourseIds }
+    })
+
     res.json({
-        message: "User created successfully",
+        purchases,
+        courseData
     })
 })
 
